@@ -1,1 +1,1 @@
-Simple calculator using Javascript
+Simple calculator using Javascript, not finished yet.
