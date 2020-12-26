@@ -82,7 +82,6 @@ btns.forEach((e) => {
             if (char === ".") {
                 contador = 0;
             }
-            console.log(array);
         }
         else if(btn.contains("clear")){
             array = [];
@@ -123,14 +122,11 @@ btns.forEach((e) => {
         }
         else if(btn.contains("equal")){
             nextN = screen.value;
-            console.log(nextN + " next")
             let result = total(prevN, nextN, mode);
 
             screen.value = result;
-            console.log(prevN + " next***" + nextN);
             if(typeof result == "string"){
                 screen.style.fontSize = "25px";
-                console.log(typeof result);
             }
             
             cntdr = false;
@@ -146,12 +142,10 @@ let num = ne => {
     if(typeof ne == "string"){
         if (ne === "") {
             array.push();
-            console.log("funciona");
             return array.join('');
         }
         else{
             array.push(ne);
-            console.log(array + " 1");
             return array.join('');
         }
     }
