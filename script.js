@@ -9,218 +9,172 @@ var array = [];
 
 var contador = 0;
 
-var prevN;
+var prevN = 0;
 
-var nextN;
+var nextN = 0;
 
 var status = "nr";
 
-var mode;
+var mode = "e";
 
 screen.value = 0;
 
-btns.forEach(function(e){
+let cntdr = false;
 
-    e.addEventListener("click", function(b){
+btns.forEach((e) => {
+
+    e.addEventListener("click", (b) => {
 
         const btn = b.currentTarget.classList;
 
-        if(btn.contains("clear")){
-            screen.value = 0;
-            array = [];
-            contador = 0;
-        }
-        if(btn.contains("divide")){
-            array = [];
-            contador = 0;
-            status = "r";
-            mode = 1;
-            prevN = parseInt(screen.value).toFixed(5);
-            if(Number.isInteger(prevN)){
-                prevN = screen.value;
-            }
-            else{
-                prevN = parseFloat(screen.value).toFixed(5);
-            }
-        }
-        if(btn.contains("sum")){
-            array = [];
-            contador = 0;
-            status = "r";
-            mode = 2;
-            prevN = parseInt(screen.value).toFixed(5);
-            if(Number.isInteger(prevN)){
-                prevN = screen.value;
-            }
-            else{
-                prevN = parseFloat(screen.value).toFixed(5);
-            }
-        }
-        if(btn.contains("minus")){
-            array = [];
-            contador = 0;
-            status = "r";
-            mode = 3;
-            prevN = parseInt(screen.value).toFixed(5);
-            if(Number.isInteger(prevN)){
-                prevN = parseInt(screen.value);
-            }
-            if(!Number.isInteger(prevN)){
-                prevN = parseFloat(screen.value).toFixed(5);
-            }
-        }
-        if(btn.contains("multiply")){
-            array = [];
-            contador = 0;
-            status = "r";
-            mode = 4;
-            console.log("multi");
-            prevN = parseInt(screen.value);
-            if(Number.isInteger(prevN)){
-                prevN = screen.value;
-            }
-            else{
-                prevN = parseFloat(screen.value).toFixed(5);
-            }
-        }
-        if(btn.contains("backspace")){
-            array.pop()
-            screen.value =  array.join('');
-            nextN = screen.value;
-            if(array.length == 0){
-                screen.value = 0;
-            }
-            console.log(nextN);
-        }
         if(btn.contains("one")){
             screen.value = num(1);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("two")){
             screen.value = num(2);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("three")){
             screen.value = num(3);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("four")){
             screen.value = num(4);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("five")){
             screen.value = num(5);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("six")){
             screen.value = num(6);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("seven")){
             screen.value = num(7);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("eight")){
             screen.value = num(8);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("nine")){
             screen.value = num(9);
-            nextN = parseInt(screen.value);
         }
         else if(btn.contains("zero")){
             screen.value = num(0);
-            nextN = parseInt(screen.value);
+        }
+        else if(btn.contains("point")){
+            if (contador >= 1) {
+                screen.value = num("");
+            }
+            else{
+                if (screen.value === "0") {
+                    array.pop();
+                    screen.value = num("0.");
+                    contador++;
+                }
+                else{
+                    contador++;
+                    screen.value = num(".");
+                }
+            }
+        }
+        else if(btn.contains("backspace")){
+            let char = array.pop();
+            screen.value =  array.join('');
+            if(array.length == 0){
+                screen.value = 0;
+            }
+            if (char === ".") {
+                contador = 0;
+            }
+            console.log(array);
+        }
+        else if(btn.contains("clear")){
+            array = [];
+            screen.value = num(0);
+            cntdr = false;
+            mode = "e";
+            contador = 0;
+        }
+        else if(btn.contains("sum")){
+            prevN = screen.value;
+            mode = "s";
+            array = [];
+            contador = 0;
+        }
+        else if (btn.contains("minus")) {
+            prevN = screen.value;
+            mode = "m";
+            array = [];
+            contador = 0;
+        }
+        else if (btn.contains("minus")) {
+            prevN = screen.value;
+            mode = "m";
+            array = [];
+            contador = 0;
+        }
+        else if (btn.contains("multiply")) {
+            prevN = screen.value;
+            mode = "multi";
+            array = [];
+            contador = 0;
+        }
+        else if (btn.contains("divide")) {
+            prevN = screen.value;
+            mode = "div";
+            array = [];
+            contador = 0;
         }
         else if(btn.contains("equal")){
-            var result = total(mode,prevN, nextN);
+            nextN = screen.value;
+            console.log(nextN + " next")
+            let result = total(prevN, nextN, mode);
 
             screen.value = result;
-
+            console.log(prevN + " next***" + nextN);
+            if(typeof result == "string"){
+                screen.style.fontSize = "25px";
+                console.log(typeof result);
+            }
+            
+            cntdr = false;
             array = [];
         }
-        var y = array.toString();
-        console.log(y);
     });
-    
 });
 
-function num(ne){
+let cont = 0;
+let arr = [];
 
-    array.push(parseInt(ne));
-    
-    return parseInt(array.join(''));
+let num = ne => {
+    if(typeof ne == "string"){
+        if (ne === "") {
+            array.push();
+            console.log("funciona");
+            return array.join('');
+        }
+        else{
+            array.push(ne);
+            console.log(array + " 1");
+            return array.join('');
+        }
+    }
+    else{
+        array.push(parseFloat(ne));
+        return parseFloat(array.join(''));
+    }
 }
 
-function total(stat,prevNumber,nextNumber){
-    if(stat == 1){
-        console.log(prevNumber + " / " + nextNumber);
-        if(Number.isInteger(parseInt(prevNumber)) && Number.isInteger(parseInt(nextNumber))){
-            var result = (parseInt(prevNumber)/parseInt(nextNumber));
-            console.log("funciona 1/");
-        }
-        if(Number.isInteger(parseInt(prevNumber)) && !Number.isInteger(parseFloat(nextNumber))){
-            var result = (parseInt(prevNumber)/parseFloat(nextNumber).toFixed(5));
-            console.log("funciona 2/");
-        }
-        if(Number.isInteger(parseInt(nextNumber)) && !Number.isInteger(parseFloat(prevNumber))){
-            var result = (parseFloat(prevNumber)/parseInt(nextNumber)).toFixed(5);
-            console.log("funciona 3/");
-        }        
-
-        return result;
+let total = (prevNumber, nextNumber, op) => {
+    let resultado;
+    if (op === "s") {
+        resultado = (parseFloat(prevNumber) + parseFloat(nextNumber));
     }
-    if(stat == 2){
-        if(Number.isInteger(parseInt(prevNumber)) && Number.isInteger(parseInt(nextNumber))){
-            var result = (parseInt(prevNumber)+parseInt(nextNumber));
-            console.log("funciona 1+");
-        }
-        if(Number.isInteger(parseInt(prevNumber)) && !Number.isInteger(parseFloat(nextNumber))){
-            var result = (parseInt(prevNumber)+parseFloat(nextNumber).toFixed(5));
-            console.log("funciona 2+");
-        }
-        if(Number.isInteger(parseInt(nextNumber)) && !Number.isInteger(parseFloat(prevNumber))){
-            var result = (parseFloat(prevNumber)+parseInt(nextNumber)).toFixed(5);
-            console.log("funciona 3+");
-        }
-
-        console.log(prevNumber + " + " + nextNumber);
-
-        return result;
+    else if (op === "m") {
+        resultado = (parseFloat(prevNumber) - parseFloat(nextNumber));
     }
-    if(stat == 3){
-
-        if(Number.isInteger(parseInt(prevNumber)) && Number.isInteger(parseInt(nextNumber))){
-            var result = (parseInt(prevNumber)-parseInt(nextNumber));
-            console.log("funciona 1+");
-        }
-        if(Number.isInteger(parseInt(prevNumber)) && !Number.isInteger(parseFloat(nextNumber))){
-            var result = (parseInt(prevNumber)-parseFloat(nextNumber).toFixed(5));
-            console.log("funciona 2+");
-        }
-        if(Number.isInteger(parseInt(nextNumber)) && !Number.isInteger(parseFloat(prevNumber))){
-            var result = (parseFloat(prevNumber)-parseInt(nextNumber)).toFixed(5);
-            console.log("funciona 3+");
-        }
-
-        console.log(prevNumber + " - " + nextNumber);
-
-        return result;
+    else if (op === "multi") {
+        resultado = (parseFloat(prevNumber) * parseFloat(nextNumber));
     }
-    if(stat == 4){
-        if(Number.isInteger(parseInt(prevNumber)) && Number.isInteger(parseInt(nextNumber))){
-            var result = (parseInt(prevNumber)*parseInt(nextNumber));
-            console.log("funciona 1+");
-        }
-        if(Number.isInteger(parseInt(prevNumber)) && !Number.isInteger(parseFloat(nextNumber))){
-            var result = (parseInt(prevNumber)*parseFloat(nextNumber).toFixed(5));
-            console.log("funciona 2+");
-        }
-        if(Number.isInteger(parseInt(nextNumber)) && !Number.isInteger(parseFloat(prevNumber))){
-            var result = (parseFloat(prevNumber)*parseInt(nextNumber)).toFixed(5);
-            console.log("funciona 3+");
-        }
-        return result;
+    else if(op === "div"){
+        resultado = (parseFloat(prevNumber) / parseFloat(nextNumber));
     }
     
+    return resultado;
 }
