@@ -155,3 +155,8 @@ body{
     grid-row: 1;
     grid-column: 3/4;
 }
+
+.buttons button:nth-child(18){
+    grid-row: 5;
+    grid-column: 1/2;
+}
