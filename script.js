@@ -26,36 +26,11 @@ btns.forEach((e) => {
     e.addEventListener("click", (b) => {
 
         const btn = b.currentTarget.classList;
-
-        if(btn.contains("one")){
-            screen.value = num(1);
-        }
-        else if(btn.contains("two")){
-            screen.value = num(2);
-        }
-        else if(btn.contains("three")){
-            screen.value = num(3);
-        }
-        else if(btn.contains("four")){
-            screen.value = num(4);
-        }
-        else if(btn.contains("five")){
-            screen.value = num(5);
-        }
-        else if(btn.contains("six")){
-            screen.value = num(6);
-        }
-        else if(btn.contains("seven")){
-            screen.value = num(7);
-        }
-        else if(btn.contains("eight")){
-            screen.value = num(8);
-        }
-        else if(btn.contains("nine")){
-            screen.value = num(9);
-        }
-        else if(btn.contains("zero")){
-            screen.value = num(0);
+        
+        let number = btn[1];
+        
+        if (btn.contains(number) && parseInt(number) <= 9) {
+            screen.value = num(parseInt(number));
         }
         else if(btn.contains("point")){
             if (contador >= 1) {
